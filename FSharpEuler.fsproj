@@ -68,6 +68,7 @@
     <Compile Include="SumOfPrimes.fs" />
     <Compile Include="LargestGridProd.fs" />
     <Compile Include="TriangleNum.fs" />
+    <Compile Include="LargeSum.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -37,22 +37,18 @@ module HighDivTriangleNumber
         let divisors = Int.GetAllFactors value
         {Rank = n; Value = value; Divisors = divisors}
 
-    let GetTriangleNumWithNDivisors n = 
+    let GetTriangleNumWithNDivisors start n = 
         let rec calculate rank =
             let num = getNthTriangleNum rank
-            if List.length num.Divisors = n then   
+            if List.length num.Divisors >= n then   
                 num
             else
-                return! calculate (rank + 1)
+                calculate (rank + 1)
         
 
-        calculate 500            
-
-       
+        calculate start            
         
+    let testResult = 
+        GetTriangleNumWithNDivisors 500 500
     
-
-    let testResult = async{ 
-        return! GetTriangleNumWithNDivisors 5
-    }
     
