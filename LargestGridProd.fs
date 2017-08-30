@@ -97,7 +97,7 @@ module LargestGridProduct
             getHorizontal x y ; getVertical x y ; getDiagonalLeft x y; getDiagonalRight x y
         |]
 
-    let calculate =
+    let calculate () =
         let rank = 3
         let mutable largest = 1;
         for x in 0 .. GRID_HEIGHT - rank do 

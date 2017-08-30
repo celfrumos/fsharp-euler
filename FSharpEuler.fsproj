@@ -67,6 +67,7 @@
     <Compile Include="PythagoreanTriplet.fs" />
     <Compile Include="SumOfPrimes.fs" />
     <Compile Include="LargestGridProd.fs" />
+    <Compile Include="TriangleNum.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
