@@ -27,7 +27,15 @@
     What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
 *)
 
+#if INTERACTIVE
 module LargestGridProduct =
+#else 
+module LargestGridProduct
+#endif
+
+    let GRID_WIDTH = 20
+    let GRID_HEIGHT = GRID_WIDTH
+
     let GRID =       
         [|
             [| 08; 02; 22; 97; 38; 15; 00; 40; 00; 75; 04; 05; 07; 78; 52; 12; 50; 77; 91; 08 |];
@@ -52,54 +60,56 @@ module LargestGridProduct =
             [| 01; 70; 54; 71; 83; 51; 54; 69; 16; 92; 33; 48; 61; 43; 52; 01; 89; 19; 67; 48 |]
         |]
 
+    let IsInRange (x, y) =
+        x >= 0 && y >= 0 && 
+        x < GRID_HEIGHT && y < GRID_WIDTH
 
-    let getAllAdjacentCombos rank =
-        let range = [0 + rank .. 20 - rank]
-        [|            
-             for i in range do
-                yield  
-                    [|
-                        for j in range do
-                            for k in 0..rank do
+    let getValuesAtCoordinates (x1, y1) (x2, y2) (x3, y3) (x4, y4)    =
+        if not (IsInRange (x1, y1) && IsInRange(x2, y2) && IsInRange(x3, y3) && IsInRange(x4, y4)) then 
+            None
+        else
+            let a = GRID.[x1].[y1]
+            let b = GRID.[x2].[y2]
+            let c = GRID.[x3].[y3]
+            let d = GRID.[x4].[y4]
 
-                                yield GRID.[i].[j]
-                    |]
+            Some (a, b, c, d)
 
-        |]
-
-    let getPermutations rank x y =
-        let rec getYPermutes a b =
-            if b = rank then
-                []
-            else 
-                let nextB = b + 1
-                GRID.[a].[b]
-                ::getYPermutes a nextB
-                ::getYPermutes (a + 1) b + 1
+    let getProductOfSection (combo: (int * int * int * int) option)  =
+        match combo with
+        | Some (a, b, c, d) -> a * b * c * d
+        | None -> 0
         
-        
-        getYPermutes x y
-        |> List.toArray
-        
+    let getDiagonalLeft x y =
+        getValuesAtCoordinates (x, y + 3)  (x + 1, y + 2)  (x + 2, y + 1) (x + 3, y)    
 
-    let GetAllAdjacentCombos rank =
-        let getAllPermutations = getPermutations rank
-        let range = [0..19]
-        let getMinVal start =
-            if start - rank < 0 then
-                0
-            else if start + rank >= 20 then
-                start - rank
-            else
-                start
+    let getDiagonalRight x y =
+        getValuesAtCoordinates (x, y)  (x + 1, y + 1)  (x + 2, y + 2) (x + 3, y + 3)            
 
+    let getHorizontal x y =
+        getValuesAtCoordinates (x, y)  (x, y + 1)  (x, y + 2) (x, y + 3)
+        
+    let getVertical x y =
+        getValuesAtCoordinates (x, y) (x + 1, y) (x + 2, y)  (x + 3, y)
+
+    let getAllCombos x y =
         [|
-            for startX in range do
-               let maxDistX = getMinVal startX 
-               yield 
-                [|
-                    for startY in range do                        
-                        let maxDistY = getMinVal startY
-                        if maxDistX >= 0 && maxDistY >= 0 then
-                            getAllPermutations startX startY
+            getHorizontal x y ; getVertical x y ; getDiagonalLeft x y; getDiagonalRight x y
         |]
+
+    let calculate =
+        let rank = 3
+        let mutable largest = 1;
+        for x in 0 .. GRID_HEIGHT - rank do 
+            for y in 0 .. GRID_WIDTH - rank do 
+                
+                let combos = getAllCombos x y
+                let newMax =
+                    combos
+                    |> Array.map getProductOfSection
+                    |> Array.max                  
+
+                if newMax > largest then
+                    largest <- newMax
+        largest
+
