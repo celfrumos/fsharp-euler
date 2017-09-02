@@ -69,6 +69,7 @@
     <Compile Include="LargestGridProd.fs" />
     <Compile Include="TriangleNum.fs" />
     <Compile Include="LargeSum.fs" />
+    <Compile Include="Collatz.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
