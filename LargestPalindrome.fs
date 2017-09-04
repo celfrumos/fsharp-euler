@@ -15,18 +15,6 @@ module LargestPalindrome
     open Extensions
     open System.Numerics
 
-    module Int =      
-        let IsPalindrome (num: int) =   
-            let rec calcPalindrome (str: string) (start: int) (finish: int) =
-                if start >= finish then
-                    true
-                else if str.[start] <> str.[finish] then
-                    false
-                else
-                    calcPalindrome str (start + 1) (finish - 1)
-
-            let thisStr = num.ToString()
-            calcPalindrome thisStr (0) (thisStr.Length - 1)
    
      
     let getSecondArray max min =

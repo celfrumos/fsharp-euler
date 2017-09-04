@@ -70,6 +70,8 @@
     <Compile Include="TriangleNum.fs" />
     <Compile Include="LargeSum.fs" />
     <Compile Include="Collatz.fs" />
+    <Compile Include="LatticePaths.fs" />
+    <Compile Include="PowerDigitSum.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

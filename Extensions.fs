@@ -10,9 +10,7 @@ module Extensions
     open System
     open Microsoft.FSharp.Math
     open System.Numerics
-
-
-    
+   
 
     type Float =
         static member IsMultipleOf mult num = 
@@ -55,6 +53,16 @@ module Extensions
                                | Some(x) -> false   // If a value was found, it's not prime
                                | None -> true           // If no values could be found, that means it's prime
        
+        static member ParseChar (ch: char) =
+            ch.ToString()
+            |> Double.Parse
+
+        static member SumDigits (num: float)  =
+            let str = num.ToString()
+            
+            str.ToCharArray()
+            |> Array.sumBy Float.ParseChar 
+
 
     type Int =
         
@@ -99,7 +107,17 @@ module Extensions
                         ]
                         |> List.distinct
                         |> sortmethod
+        static member IsPalindrome (num: int) =   
+            let rec calcPalindrome (str: string) (start: int) (finish: int) =
+                if start >= finish then
+                    true
+                else if str.[start] <> str.[finish] then
+                    false
+                else
+                    calcPalindrome str (start + 1) (finish - 1)
 
+            let thisStr = num.ToString()
+            calcPalindrome thisStr (0) (thisStr.Length - 1)
 
         static member GetAllFactors num = 
             Int.GetFactors (fun a -> true) List.sort num
@@ -113,6 +131,15 @@ module Extensions
                 |> Seq.exists (Int.IsDivisorOf num)
                 |> not
 
+        static member ParseChar (ch: char) =
+            ch.ToString()
+            |> Int32.Parse
+
+        static member SumDigits (num: int)  =
+            let str = num.ToString()
+            
+            str.ToCharArray()
+            |> Array.sumBy Int.ParseChar 
 
     type Long  =
         
@@ -157,17 +184,33 @@ module Extensions
                 |> Seq.exists (Long.IsDivisorOf num)
                 |> not
 
-    //
-    //
-    //
+       
+
+        static member Pow (power: int64) (n: int64)  =
+            let mutable prod = n
+            for i in 1L..power - 1L do
+                prod <- prod * n
+
+            prod     
+
+        static member ParseChar (ch: char) =
+            ch.ToString()
+            |> Int64.Parse
+    
+        static member SumDigits (num: int64)  =
+            let str = num.ToString()
+            
+            str.ToCharArray()
+            |> Array.sumBy Long.ParseChar 
+
 
             
+    type Number = 
+        static member SumDigits num =
+            let str = num.ToString()
             
-        // static member IsPrime (num: bigint) =
-        //         let root = BigInteger
-        //         {2L .. root}
-        //         |> Seq.exists (Long.IsDivisorOf num)
-        //         |> not
+            str.ToCharArray()
+            |> Array.sumBy Long.ParseChar 
 
     // module Tester =
     //     open Extensions       
