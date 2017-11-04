@@ -72,6 +72,9 @@
     <Compile Include="Collatz.fs" />
     <Compile Include="LatticePaths.fs" />
     <Compile Include="PowerDigitSum.fs" />
+    <Compile Include="NumberLetterCounts.fs" />
+    <Compile Include="SelfPowers.fs" />
+    <Compile Include="QuadraticPrimes.fs"/>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -636,7 +636,7 @@ module DiscriminatedUnions =
     //
     // Single-case DUs cannot be implicitly converted to or from the type they wrap.
     // For example, a function which takes in an Address cannot accept a string as that input,
-    // or vive/versa.
+    // or vice/versa.
     type Address = Address of string
     type Name = Name of string
     type SSN = SSN of int
